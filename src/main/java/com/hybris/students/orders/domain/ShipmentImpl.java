@@ -1,6 +1,6 @@
 package com.hybris.students.orders.domain;
 
-import com.hybris.students.orders.Shipment;
+import com.hybris.students.orders.io.Shipment;
 
 public class ShipmentImpl implements Shipment {
 

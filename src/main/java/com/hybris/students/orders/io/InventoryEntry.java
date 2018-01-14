@@ -1,4 +1,4 @@
-package com.hybris.students.orders;
+package com.hybris.students.orders.io;
 
 public interface InventoryEntry
 {

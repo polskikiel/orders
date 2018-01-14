@@ -1,8 +1,6 @@
 package com.hybris.students.orders.domain;
 
-import com.hybris.students.orders.InventoryEntry;
-
-import java.util.Comparator;
+import com.hybris.students.orders.io.InventoryEntry;
 
 public class InventoryEntryImpl implements InventoryEntry {
 

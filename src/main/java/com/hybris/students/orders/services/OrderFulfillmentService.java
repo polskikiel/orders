@@ -1,16 +1,19 @@
-package com.hybris.students.orders;
+package com.hybris.students.orders.services;
 
+import com.hybris.students.orders.Lists;
 import com.hybris.students.orders.domain.InventoryEntryImpl;
 import com.hybris.students.orders.domain.OrderImpl;
 import com.hybris.students.orders.domain.ShipmentImpl;
+import com.hybris.students.orders.exceptions.CannotFulfillException;
+import com.hybris.students.orders.exceptions.ProductNotFoundException;
+import com.hybris.students.orders.io.*;
 
 import java.util.*;
 
 
 public class OrderFulfillmentService implements OrderFulfillment {
 
-    private Map<String, List<String>> connections =
-            new HashMap<String, List<String>>();
+    private Map<String, List<String>> connections = new HashMap<String, List<String>>();
     // key = [(order)destination]
 
     // java 7 way, I can do it also using java 8 collections
@@ -198,9 +201,6 @@ public class OrderFulfillmentService implements OrderFulfillment {
 
         Map<String, List<InventoryEntryImpl>> inventoryMap = new HashMap<String, List<InventoryEntryImpl>>();
 
-        Lists<InventoryEntryImpl> inventoryEntryLists = new Lists<InventoryEntryImpl>();
-
-
         for (InventoryEntry inventoryEntry : inventoryEntries) {
 
             inventoryMap.put(inventoryEntry.getSku(),
@@ -238,28 +238,6 @@ public class OrderFulfillmentService implements OrderFulfillment {
         }
         orders.add(order);
         return orders;
-    }
-
-
-    private List<InventoryEntryImpl> fromCollection(final Collection<InventoryEntry> inventoryEntries) {
-        List<InventoryEntryImpl> entries = new ArrayList<InventoryEntryImpl>() {
-            @Override
-            public boolean add(InventoryEntryImpl inventoryEntry) {
-                Collections.sort(this, new Comparator<InventoryEntryImpl>() {
-                    public int compare(InventoryEntryImpl o1, InventoryEntryImpl o2) {
-                        return o2.getAmount() - o1.getAmount(); // descending
-                    }
-                });
-                return super.add(inventoryEntry);
-            }
-        };
-
-        for (InventoryEntry inventoryEntry : inventoryEntries) {
-            entries.add(new InventoryEntryImpl(inventoryEntry));
-        }
-
-
-        return entries;
     }
 
 

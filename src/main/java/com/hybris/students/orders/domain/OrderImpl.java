@@ -1,6 +1,6 @@
 package com.hybris.students.orders.domain;
 
-import com.hybris.students.orders.Order;
+import com.hybris.students.orders.io.Order;
 
 public class OrderImpl implements Order {
 

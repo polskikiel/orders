@@ -1,23 +1,23 @@
 package com.hybris.students.orders;
 
-import org.junit.Assert;
+import com.hybris.students.orders.exceptions.CannotFulfillException;
+import com.hybris.students.orders.io.InventoryEntry;
+import com.hybris.students.orders.io.Order;
+import com.hybris.students.orders.io.OrderFulfillment;
+import com.hybris.students.orders.io.Shipment;
+import com.hybris.students.orders.services.OrderFulfillmentService;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 
 
 public class OrderFulfillmentTest {
-    // Change CheatingOrderFulfillment to OrderFulfillmentService:
-
 
     private OrderFulfillment fulfillment = new OrderFulfillmentService();
-    //private final OrderFulfillment fulfillment = new CheatingOrderFulfillment();
-
 
     @Test
     public void simpleTestCase() {
@@ -32,7 +32,7 @@ public class OrderFulfillmentTest {
         entries.add(createInventoryEntry("Munich", "p3", 4));
         entries.add(createInventoryEntry("Montreal", "p1", 4));
         entries.add(createInventoryEntry("Montreal", "p4", 5));
-        entries.add(createInventoryEntry("Montreal", "p124", 15));    // additional
+        entries.add(createInventoryEntry("Montreal", "p124", 15));
         entries.add(createInventoryEntry("Munich", "p124", 4));
 
         Collection<Order> orders = new ArrayList<Order>();
@@ -40,11 +40,9 @@ public class OrderFulfillmentTest {
         orders.add(createOrder("Sydney", "p2", 10));
         orders.add(createOrder("Sydney", "p3", 3));
         orders.add(createOrder("Tokyo", "p2", 6));
-        //orders.add(createOrder("Sydney", "p3", 1));
-        //  THIS ONE BREAK TEST^, because test don't check doubled orders
 
         orders.add(createOrder("Tokyo", "p4", 5));
-        orders.add(createOrder("Tokyo", "p1", 4)); // additional orders to set from your test example
+        orders.add(createOrder("Tokyo", "p1", 4));
         orders.add(createOrder("Tokyo", "p124", 4));
         orders.add(createOrder("Berlin", "p124", 6));
         orders.add(createOrder("Corleone", "p124", 6));
@@ -61,8 +59,7 @@ public class OrderFulfillmentTest {
 
         Collection<Shipment> shipmentCollection = shipments;
 
-
-        // COMMENT INDICATED ORDER TO PASS TEST
+        // Test if orders were fulfilled
         for (Order order : orders) {
             int ordered = 0;
             for (Shipment shipment : shipmentCollection) {
@@ -74,14 +71,6 @@ public class OrderFulfillmentTest {
             }
             assertThat(ordered).isEqualTo(order.getAmount());
         }
-
-        // then
-        /*assertThat(shipments).hasSize(1);
-        final Shipment shipment = shipments.iterator().next();
-		assertThat(shipment.getLocation()).isEqualTo(entry.getLocation());
-		assertThat(shipment.getDestination()).isEqualTo(order.getDestination());
-		assertThat(shipment.getSku()).isEqualTo(order.getSku());
-		assertThat(shipment.getAmount()).isEqualTo(order.getAmount());*/
     }
 
     @Test(expected = CannotFulfillException.class)

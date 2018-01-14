@@ -1,4 +1,4 @@
-package com.hybris.students.orders;
+package com.hybris.students.orders.exceptions;
 
 public class ProductNotFoundException extends RuntimeException {
 

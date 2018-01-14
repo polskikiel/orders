@@ -1,5 +1,11 @@
 package com.hybris.students.orders;
 
+import com.hybris.students.orders.exceptions.CannotFulfillException;
+import com.hybris.students.orders.io.InventoryEntry;
+import com.hybris.students.orders.io.Order;
+import com.hybris.students.orders.io.OrderFulfillment;
+import com.hybris.students.orders.io.Shipment;
+
 import java.util.Collection;
 import java.util.Collections;
 

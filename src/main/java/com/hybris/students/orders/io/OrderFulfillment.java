@@ -1,4 +1,7 @@
-package com.hybris.students.orders;
+package com.hybris.students.orders.io;
+
+import com.hybris.students.orders.exceptions.CannotFulfillException;
+import com.hybris.students.orders.exceptions.ProductNotFoundException;
 
 import java.util.Collection;
 
